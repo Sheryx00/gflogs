@@ -15,7 +15,7 @@ for pattern in $(gf -list); do
     echo "\n# $pattern\n" >> "$LOG_FILE"
 
     # Run gf command with the -I flag to avoid "binary file matches"
-    gf "$pattern" -H -I | while read -r line; do
+    gf "$pattern" -H -I | grep -v "$LOG_FILE" | while read -r line; do
         # Extract the file name and match
         file=$(echo "$line" | cut -d: -f1)
         match=$(echo "$line" | cut -d: -f2-)
@@ -36,4 +36,3 @@ done
 rm "$TEMP_FILE"
 
 echo "Logs saved to $LOG_FILE"
-
